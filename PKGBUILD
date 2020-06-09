@@ -20,7 +20,6 @@ source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
         "extlinux.conf")
 sha256sums=('24a7b888e2c39cc93a8f5af5d5bf2eb0a9412f6992df71716c6fe233faef250a'
             '37f917922bcef181164908c470a2f941006791c0113d738c498d39d95d543b21'
-            'e37dea2c2fe03d8c6b6d73c382fdcb922f5b2369d01858681183eb30ce999d74'
             'e29431ffeb7368983c74b7f7ea108f74e1363305231b0b5bb698884945ab0c5a')
 
 prepare() {
