@@ -4,8 +4,8 @@
 # Contributor: Adam <adam900710@gmail.com>
 
 pkgname=uboot-pinebookpro
-pkgver=2020.01
-pkgrel=8
+pkgver=2020.07rc4
+pkgrel=1.1
 _tfaver=2.3
 pkgdesc="U-Boot for Pinebook Pro"
 arch=('aarch64')
