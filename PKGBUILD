@@ -5,7 +5,7 @@
 
 pkgname=uboot-pinebookpro
 pkgver=2020.07
-pkgrel=1
+pkgrel=2
 _tfaver=2.3
 pkgdesc="U-Boot for Pinebook Pro"
 arch=('aarch64')
@@ -13,6 +13,8 @@ url='http://www.denx.de/wiki/U-Boot/WebHome'
 license=('GPL')
 backup=('boot/extlinux/extlinux.conf')
 makedepends=('git' 'arm-none-eabi-gcc' 'dtc' 'bc')
+provides=('uboot')
+conflicts=('uboot')
 install=${pkgname}.install
 _commit_atf=22d12c4148c373932a7a81e5d1c59a767e143ac2
 source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
@@ -46,6 +48,8 @@ build() {
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
   make pinebook-pro-rk3399_defconfig
   echo 'CONFIG_IDENT_STRING=" Manjaro ARM"' >> .config
+  echo 'CONFIG_MMC_HS200_SUPPORT=y' >> .config
+  echo 'CONFIG_SPL_MMC_HS200_SUPPORT=y' >> .config
   make EXTRAVERSION=-${pkgrel}
 }
 
