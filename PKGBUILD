@@ -5,7 +5,7 @@
 
 pkgname=uboot-pinebookpro
 pkgver=2020.07
-pkgrel=2
+pkgrel=3
 _tfaver=2.3
 pkgdesc="U-Boot for Pinebook Pro"
 arch=('aarch64')
@@ -48,8 +48,6 @@ build() {
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
   make pinebook-pro-rk3399_defconfig
   echo 'CONFIG_IDENT_STRING=" Manjaro ARM"' >> .config
-  echo 'CONFIG_MMC_HS200_SUPPORT=y' >> .config
-  echo 'CONFIG_SPL_MMC_HS200_SUPPORT=y' >> .config
   make EXTRAVERSION=-${pkgrel}
 }
 

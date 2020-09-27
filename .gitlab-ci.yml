@@ -1,8 +1,8 @@
-build-package:
+package:
   tags:
-    - strit
+    - aarch64
   script:
-    - sudo pacman -Syy && makepkg -scr --noconfirm
+    - sudo pacman -Syu --noconfirm && makepkg -scr --noconfirm
   artifacts:
     paths:
     - ./*.pkg.tar.*
