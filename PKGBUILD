@@ -5,7 +5,7 @@
 
 pkgname=uboot-pinebookpro
 pkgver=2020.07
-pkgrel=3
+pkgrel=4
 _tfaver=2.3
 pkgdesc="U-Boot for Pinebook Pro"
 arch=('aarch64')
@@ -22,6 +22,7 @@ source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
         "0001-Add-regulator-needed-for-usage-of-USB.patch"
         "0002-Correct-boot-order-to-be-USB-SD-eMMC.patch"
         "0003-rk3399-light-pinebook-power-and-standby-leds-during-early-boot.patch"
+        "0004-RFC-Pinebook-pro-EDP-support.patch"
         "extlinux.conf")
 sha256sums=('c1f5bf9ee6bb6e648edbf19ce2ca9452f614b08a9f886f1a566aa42e8cf05f6a'
             '37f917922bcef181164908c470a2f941006791c0113d738c498d39d95d543b21'
@@ -33,9 +34,10 @@ sha256sums=('c1f5bf9ee6bb6e648edbf19ce2ca9452f614b08a9f886f1a566aa42e8cf05f6a'
 prepare() {
   cd u-boot-${pkgver/rc/-rc}
   # Patches based on the work of dhivael and Nadia
-  patch -Np1 -i "${srcdir}/0001-Add-regulator-needed-for-usage-of-USB.patch" # USB boot
+  patch -Np1 -i "${srcdir}/0001-Add-regulator-needed-for-usage-of-USB.patch" #USB boot
   patch -Np1 -i "${srcdir}/0002-Correct-boot-order-to-be-USB-SD-eMMC.patch" #USB boot
   patch -Np1 -i "${srcdir}/0003-rk3399-light-pinebook-power-and-standby-leds-during-early-boot.patch" #Orange LED
+  patch -Np1 -i "${srcdir}/0004-RFC-Pinebook-pro-EDP-support.patch" #eDP support
   sed -i s/"CONFIG_BOOTDELAY=3"/"CONFIG_BOOTDELAY=0"/g configs/pinebook-pro-rk3399_defconfig
 }
 
