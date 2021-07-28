@@ -34,7 +34,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/0001-PBP-Fix-Panel-reset.patch"                                              # Fix Panel reset
   patch -Np1 -i "${srcdir}/0002-Correct-boot-order-to-be-USB-SD-eMMC.patch"                             #USB boot
   patch -Np1 -i "${srcdir}/0003-rk3399-light-pinebook-power-and-standby-leds-during-early-boot.patch"   #Orange LED
-  cd trusted-firmware-a-$_tfaver
+  cd ../trusted-firmware-a-$_tfaver
   patch -Np1 -i "${srcdir}/0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch"                #Working suspend
 }
 
