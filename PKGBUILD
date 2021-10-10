@@ -4,8 +4,8 @@
 # Contributor: Adam <adam900710@gmail.com>
 
 pkgname=uboot-pinebookpro
-pkgver=2021.07
-pkgrel=3
+pkgver=2021.10
+pkgrel=1
 _tfaver=2.5
 pkgdesc="U-Boot for Pinebook Pro"
 arch=('aarch64')
@@ -22,7 +22,7 @@ source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
         "0003-rk3399-light-pinebook-power-and-standby-leds-during-early-boot.patch"
         "0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch"
         "0002-fix-rockchip-rk3399-fix-dram-section-placement.patch")
-sha256sums=('312b7eeae44581d1362c3a3f02c28d806647756c82ba8c72241c7cdbe68ba77e'
+sha256sums=('cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4'
             'ad8a2ffcbcd12d919723da07630fc0840c3c2fba7656d1462e45488e42995d7c'
             'c3ea09a18b766a3ce0728234b097b29e2ed610c7f04b138b7fba42e118a7ae33'
             'fec8f32af8e2a9dd6f1d8dcc83453ebded74786de03a9be14823261de7421bf3'
