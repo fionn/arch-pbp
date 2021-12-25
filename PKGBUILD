@@ -2,12 +2,13 @@
 # Maintainer: Dan Johansen <strit@manjaro.org>
 # Contributor: Kevin Mihelich 
 # Contributor: Adam <adam900710@gmail.com>
+# Contributor: Dragan Simic <dsimic@buserror.io>
 
 pkgname=uboot-pinebookpro
 pkgver=2021.10
-pkgrel=1
+pkgrel=2
 _tfaver=2.5
-pkgdesc="U-Boot for Pinebook Pro"
+pkgdesc="U-Boot for Pine64 Pinebook Pro"
 arch=('aarch64')
 url='http://www.denx.de/wiki/U-Boot/WebHome'
 license=('GPL')
@@ -33,30 +34,50 @@ sha256sums=('cde723e19262e646f2670d25e5ec4b1b368490de950d4e26275a988c36df0bd4'
 prepare() {
   cd u-boot-${pkgver/rc/-rc}
   # Patches based on the work of dhivael and Nadia
-  patch -Np1 -i "${srcdir}/0001-PBP-Fix-Panel-reset.patch"                                              # Fix Panel reset
-  patch -Np1 -i "${srcdir}/0002-Correct-boot-order-to-be-USB-SD-eMMC.patch"                             #USB boot
-  patch -Np1 -i "${srcdir}/0003-rk3399-light-pinebook-power-and-standby-leds-during-early-boot.patch"   #Orange LED
+  patch -Np1 -i "${srcdir}/0001-PBP-Fix-Panel-reset.patch"                                              # Fix panel reset
+  patch -Np1 -i "${srcdir}/0002-Correct-boot-order-to-be-USB-SD-eMMC.patch"                             # USB boot
+  patch -Np1 -i "${srcdir}/0003-rk3399-light-pinebook-power-and-standby-leds-during-early-boot.patch"   # Orange LED
+
   cd ../trusted-firmware-a-$_tfaver
-  patch -Np1 -i "${srcdir}/0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch"                #Suspend fix
-  patch -Np1 -i "${srcdir}/0002-fix-rockchip-rk3399-fix-dram-section-placement.patch"                   #GCC 11 fix
+  patch -Np1 -i "${srcdir}/0001-fix-rk3399-suspend-correct-LPDDR4-resume-sequence.patch"                # Suspend fix
+  patch -Np1 -i "${srcdir}/0002-fix-rockchip-rk3399-fix-dram-section-placement.patch"                   # GCC 11 fix
 }
 
 build() {
+  # Avoid build warnings by editing a .config option in place instead of
+  # appending an option to .config, if an option is already present
+  update_config() {
+    if ! grep -q "^$1=$2$" .config; then
+      if grep -q "^# $1 is not set$" .config; then
+        sed -i -e "s/^# $1 is not set$/$1=$2/g" .config
+      elif grep -q "^$1=" .config; then
+        sed -i -e "s/^$1=.*/$1=$2/g" .config
+      else
+        echo "$1=$2" >> .config
+      fi
+    fi
+  }
+
   cd trusted-firmware-a-$_tfaver
+
+  echo -e "\nBuilding TF-A for Pine64 Pinebook Pro...\n"
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
   make PLAT=rk3399
   cp build/rk3399/release/bl31/bl31.elf ../u-boot-${pkgver/rc/-rc}/
+
   cd ../u-boot-${pkgver/rc/-rc}
+
+  echo -e "\nBuilding U-Boot for Pine64 Pinebook Pro...\n"
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
   make pinebook-pro-rk3399_defconfig
-  echo 'CONFIG_IDENT_STRING=" Manjaro ARM"' >> .config
-  echo 'CONFIG_USB_EHCI_HCD=n' >> .config
-  echo 'CONFIG_USB_EHCI_GENERIC=n' >> .config
-  echo 'CONFIG_USB_XHCI_HCD=n' >> .config
-  echo 'CONFIG_USB_XHCI_DWC3=n' >> .config
-  echo 'CONFIG_USB_DWC3=n' >> .config
-  echo 'CONFIG_USB_DWC3_GENERIC=n' >> .config
 
+  update_config 'CONFIG_IDENT_STRING' '" Manjaro Linux ARM"'
+  update_config 'CONFIG_USB_EHCI_HCD' 'n'
+  update_config 'CONFIG_USB_EHCI_GENERIC' 'n'
+  update_config 'CONFIG_USB_XHCI_HCD' 'n'
+  update_config 'CONFIG_USB_XHCI_DWC3' 'n'
+  update_config 'CONFIG_USB_DWC3' 'n'
+  update_config 'CONFIG_USB_DWC3_GENERIC' 'n'
 
   make EXTRAVERSION=-${pkgrel}
 }
@@ -65,5 +86,5 @@ package() {
   cd u-boot-${pkgver/rc/-rc}
 
   mkdir -p "${pkgdir}/boot/extlinux"
-  cp idbloader.img u-boot.itb  "${pkgdir}/boot/"
+  install -D -m 0644 idbloader.img u-boot.itb -t "${pkgdir}/boot"
 }
