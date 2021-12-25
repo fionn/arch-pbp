@@ -61,17 +61,17 @@ build() {
     fi
   }
 
+  unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
+
   cd trusted-firmware-a-$_tfaver
 
   echo -e "\nBuilding TF-A for Pine64 Pinebook Pro...\n"
-  unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
   make PLAT=rk3399
   cp build/rk3399/release/bl31/bl31.elf ../u-boot-${pkgver/rc/-rc}/
 
   cd ../u-boot-${pkgver/rc/-rc}
 
   echo -e "\nBuilding U-Boot for Pine64 Pinebook Pro...\n"
-  unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
   make pinebook-pro-rk3399_defconfig
 
   update_config 'CONFIG_IDENT_STRING' '" Manjaro Linux ARM"'
