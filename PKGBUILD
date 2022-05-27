@@ -6,7 +6,7 @@
 
 pkgname=uboot-pinebookpro
 pkgver=2022.04
-pkgrel=2
+pkgrel=3
 _tfaver=2.6
 pkgdesc="U-Boot for Pine64 Pinebook Pro"
 arch=('aarch64')
@@ -15,6 +15,7 @@ license=('GPL')
 makedepends=('git' 'arm-none-eabi-gcc' 'dtc' 'bc')
 provides=('uboot')
 conflicts=('uboot')
+replaces=('uboot-pinebookpro-bsp')
 install=${pkgname}.install
 source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
         "https://git.trustedfirmware.org/TF-A/trusted-firmware-a.git/snapshot/trusted-firmware-a-${_tfaver}.tar.gz"
