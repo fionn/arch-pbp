@@ -5,7 +5,7 @@
 # Contributor: Dragan Simic <dsimic@buserror.io>
 
 pkgname=uboot-pinebookpro
-pkgver=2022.10
+pkgver=2023.01
 pkgrel=1
 _tfaver=2.8
 pkgdesc="U-Boot for Pine64 Pinebook Pro"
@@ -24,7 +24,7 @@ source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
         "0003-Turn-power-and-standby-LEDs-on-early.patch"
         "0004-mmc-sdhci-allow-disabling-sdma-in-spl.patch"       # From list: https://patchwork.ozlabs.org/project/uboot/patch/20220222013131.3114990-3-pgwipeout@gmail.com/
         "0005-arm-dts-Work-around-daughterboard-issues.patch")   # Will be upstreamed by the author
-sha256sums=('50b4482a505bc281ba8470c399a3c26e145e29b23500bc35c50debd7fa46bdf8'
+sha256sums=('69423bad380f89a0916636e89e6dcbd2e4512d584308d922d1039d1e4331950f'
             'df4e0f3803479df0ea4cbf3330b59731bc2efc2112c951f9adb3685229163af9'
             'c3ea09a18b766a3ce0728234b097b29e2ed610c7f04b138b7fba42e118a7ae33'
             '0565082c0c716a1d0a2dce2dbcb25046a805177af09d6511a44586add7a9d33e'
