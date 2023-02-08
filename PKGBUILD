@@ -72,6 +72,7 @@ build() {
   make pinebook-pro-rk3399_defconfig
 
   update_config 'CONFIG_IDENT_STRING' '" Manjaro Linux ARM"'
+  update_config 'CONFIG_OF_LIBFDT_OVERLAY' 'y'
   update_config 'CONFIG_SPL_MMC_SDHCI_SDMA' 'n'
   update_config 'CONFIG_MMC_HS400_SUPPORT' 'y'
 
